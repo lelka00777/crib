@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🎓 Изучение JavaScript Модулей</title>
+    <title>🚀 Шпаргалка: Import/Export</title>
     <style>
         * {
             margin: 0;
@@ -12,23 +12,22 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea, #764ba2);
             color: #333;
-            line-height: 1.6;
             min-height: 100vh;
             padding: 20px;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1000px;
             margin: 0 auto;
         }
 
         header {
             text-align: center;
-            margin-bottom: 40px;
             color: white;
+            margin-bottom: 40px;
         }
 
         h1 {
@@ -42,36 +41,34 @@
             opacity: 0.9;
         }
 
-        .main-content {
+        .cheatsheet {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            margin-bottom: 40px;
-        }
-
-        @media (max-width: 768px) {
-            .main-content {
-                grid-template-columns: 1fr;
-            }
+            gap: 20px;
         }
 
         .card {
             background: white;
             border-radius: 15px;
-            padding: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            transition: transform 0.3s ease;
+            padding: 25px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            border-left: 5px solid;
         }
 
-        .card:hover {
-            transform: translateY(-5px);
+        .card.export {
+            border-left-color: #4CAF50;
         }
 
-        .card h2 {
-            color: #667eea;
-            margin-bottom: 20px;
-            border-bottom: 2px solid #667eea;
-            padding-bottom: 10px;
+        .card.import {
+            border-left-color: #2196F3;
+        }
+
+        .card-title {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: #2c3e50;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         .code-block {
@@ -80,7 +77,7 @@
             padding: 20px;
             border-radius: 8px;
             font-family: 'Courier New', monospace;
-            margin: 15px 0;
+            margin: 10px 0;
             overflow-x: auto;
         }
 
@@ -100,383 +97,220 @@
             color: #6272a4;
         }
 
-        .interactive-demo {
-            background: #f8f9fa;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 20px 0;
-        }
-
-        .tab-buttons {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .tab-btn {
-            padding: 10px 20px;
-            border: none;
-            background: #667eea;
-            color: white;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background 0.3s ease;
-        }
-
-        .tab-btn:hover {
-            background: #5a6fd8;
-        }
-
-        .tab-btn.active {
-            background: #764ba2;
-        }
-
-        .tab-content {
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        .exercise {
-            background: #e3f2fd;
-            border-left: 4px solid #2196f3;
+        .match {
+            background: #e8f5e8;
             padding: 15px;
-            margin: 15px 0;
-            border-radius: 0 8px 8px 0;
+            border-radius: 8px;
+            margin-top: 15px;
+            border-left: 4px solid #4CAF50;
         }
 
-        .test-area {
+        .arrow {
+            text-align: center;
+            font-size: 2rem;
+            color: white;
+            margin: 10px 0;
+        }
+
+        .example {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+
+        .note {
             background: #fff3cd;
             border: 1px solid #ffeaa7;
-            padding: 20px;
-            border-radius: 8px;
-            margin: 20px 0;
-        }
-
-        button {
-            background: #667eea;
-            color: white;
-            border: none;
-            padding: 12px 24px;
+            padding: 12px;
             border-radius: 6px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background 0.3s ease;
+            margin-top: 10px;
+            font-size: 0.9rem;
         }
 
-        button:hover {
-            background: #5a6fd8;
-        }
-
-        .success {
-            color: #28a745;
-            font-weight: bold;
-        }
-
-        .error {
-            color: #dc3545;
-            font-weight: bold;
-        }
-
-        .file-structure {
-            background: #2d3748;
-            color: white;
-            padding: 15px;
-            border-radius: 8px;
-            font-family: 'Courier New', monospace;
-            margin: 15px 0;
-        }
-
-        .quiz-question {
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            margin: 15px 0;
-            border-left: 4px solid #667eea;
-        }
-
-        .options {
-            margin: 15px 0;
-        }
-
-        .option {
-            margin: 10px 0;
-            padding: 10px;
-            background: #f8f9fa;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background 0.3s ease;
-        }
-
-        .option:hover {
-            background: #e9ecef;
-        }
-
-        .option.correct {
-            background: #d4edda;
-            border: 1px solid #c3e6cb;
-        }
-
-        .option.incorrect {
-            background: #f8d7da;
-            border: 1px solid #f5c6cb;
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .code-block {
+                padding: 15px;
+                font-size: 0.9rem;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>🎓 JavaScript Модули</h1>
-            <p class="subtitle">Интерактивное руководство по import/export</p>
+            <h1>🚀 Шпаргалка: Import/Export</h1>
+            <p class="subtitle">Простое соответствие между export и import</p>
         </header>
 
-        <div class="main-content">
-            <!-- Теория -->
-            <div class="card">
-                <h2>📚 Основы модулей</h2>
-                
-                <div class="tab-buttons">
-                    <button class="tab-btn active" onclick="showTab('export-tab')">Export</button>
-                    <button class="tab-btn" onclick="showTab('import-tab')">Import</button>
-                    <button class="tab-btn" onclick="showTab('types-tab')">Типы модулей</button>
-                </div>
+        <div class="cheatsheet">
 
-                <div id="export-tab" class="tab-content active">
-                    <h3>Экспорт функций и переменных</h3>
-                    <div class="code-block">
-                        <span class="comment">// Именованный экспорт (может быть несколько)</span><br>
-                        <span class="keyword">export</span> <span class="keyword">function</span> <span class="function">play</span>() {<br>
-                        &nbsp;&nbsp;console.log(<span class="string">"▶️ Воспроизведение"</span>);<br>
-                        }<br><br>
-                        
-                        <span class="keyword">export</span> <span class="keyword">const</span> volume = <span class="string">80</span>;<br><br>
-                        
-                        <span class="comment">// Экспорт по умолчанию (только один)</span><br>
-                        <span class="keyword">const</span> player = { play, pause, stop };<br>
-                        <span class="keyword">export default</span> player;
-                    </div>
-                </div>
-
-                <div id="import-tab" class="tab-content">
-                    <h3>Импорт функций и переменных</h3>
-                    <div class="code-block">
-                        <span class="comment">// Именованный импорт</span><br>
-                        <span class="keyword">import</span> { play, volume } <span class="keyword">from</span> <span class="string">'./player.js'</span>;<br><br>
-                        
-                        <span class="comment">// Импорт по умолчанию</span><br>
-                        <span class="keyword">import</span> player <span class="keyword">from</span> <span class="string">'./player.js'</span>;<br><br>
-                        
-                        <span class="comment">// Импорт всего модуля</span><br>
-                        <span class="keyword">import</span> * <span class="keyword">as</span> playerModule <span class="keyword">from</span> <span class="string">'./player.js'</span>;<br><br>
-                        
-                        <span class="comment">// Side-effect импорт (без переменных)</span><br>
-                        <span class="keyword">import</span> <span class="string">'./theme.js'</span>;
-                    </div>
-                </div>
-
-                <div id="types-tab" class="tab-content">
-                    <h3>Типы модулей</h3>
-                    
-                    <div class="exercise">
-                        <h4>🔧 Utility модуль</h4>
-                        <p>Содержит вспомогательные функции</p>
-                    </div>
-                    
-                    <div class="exercise">
-                        <h4>🎨 Side-effect модуль</h4>
-                        <p>Выполняет код при импорте (изменяет стили, показывает уведомления)</p>
-                    </div>
-                    
-                    <div class="exercise">
-                        <h4>📊 Data модуль</h4>
-                        <p>Содержит данные (массивы, объекты, конфигурации)</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Практика -->
-            <div class="card">
-                <h2>🛠️ Практика</h2>
-                
-                <div class="file-structure">
-                    music-player/<br>
-                    ├── index.html<br>
-                    ├── main.js<br>
-                    ├── player.js<br>
-                    ├── songs.js<br>
-                    └── theme.js
-                </div>
-
-                <div class="interactive-demo">
-                    <h3>Проверь свои знания</h3>
-                    
-                    <div class="quiz-question">
-                        <p><strong>Вопрос 1:</strong> Как правильно экспортировать функцию по умолчанию?</p>
-                        <div class="options">
-                            <div class="option" onclick="checkAnswer(this, 'correct')">export default function play() {}</div>
-                            <div class="option" onclick="checkAnswer(this, 'incorrect')">export function default play() {}</div>
-                            <div class="option" onclick="checkAnswer(this, 'incorrect')">default export function play() {}</div>
-                        </div>
-                    </div>
-
-                    <div class="quiz-question">
-                        <p><strong>Вопрос 2:</strong> Что делает этот код: import './theme.js'?</p>
-                        <div class="options">
-                            <div class="option" onclick="checkAnswer(this, 'incorrect')">Импортирует функцию theme</div>
-                            <div class="option" onclick="checkAnswer(this, 'correct')">Выполняет код из theme.js</div>
-                            <div class="option" onclick="checkAnswer(this, 'incorrect')">Создает переменную theme</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="test-area">
-                    <h3>🚀 Практическое задание</h3>
-                    <p>Создайте модуль math.js с функциями:</p>
-                    <ul>
-                        <li>add(a, b) - сложение</li>
-                        <li>multiply(a, b) - умножение</li>
-                        <li>PI - константа 3.14</li>
-                    </ul>
-                    <button onclick="showSolution()">Показать решение</button>
-                    <div id="solution" style="display: none; margin-top: 15px;">
-                        <div class="code-block">
-                            <span class="comment">// math.js</span><br>
-                            <span class="keyword">export function</span> <span class="function">add</span>(a, b) {<br>
-                            &nbsp;&nbsp;<span class="keyword">return</span> a + b;<br>
-                            }<br><br>
-                            
-                            <span class="keyword">export function</span> <span class="function">multiply</span>(a, b) {<br>
-                            &nbsp;&nbsp;<span class="keyword">return</span> a * b;<br>
-                            }<br><br>
-                            
-                            <span class="keyword">export const</span> PI = <span class="string">3.14</span>;<br>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Примеры проектов -->
-        <div class="card">
-            <h2>🎯 Реальные примеры</h2>
-            
-            <div class="tab-buttons">
-                <button class="tab-btn active" onclick="showExample('music-example')">Музыкальный плеер</button>
-                <button class="tab-btn" onclick="showExample('calc-example')">Калькулятор</button>
-                <button class="tab-btn" onclick="showExample('theme-example')">Смена темы</button>
-            </div>
-
-            <div id="music-example" class="tab-content active">
+            <!-- 1. Именованный экспорт -->
+            <div class="card export">
+                <div class="card-title">📤 1. Именованный экспорт</div>
                 <div class="code-block">
-                    <span class="comment">// songs.js</span><br>
-                    <span class="keyword">const</span> songs = [<span class="string">"Song 1"</span>, <span class="string">"Song 2"</span>];<br>
-                    <span class="keyword">export default</span> songs;<br><br>
-                    
-                    <span class="comment">// player.js</span><br>
-                    <span class="keyword">export function</span> <span class="function">play</span>() {<br>
-                    &nbsp;&nbsp;console.log(<span class="string">"Playing..."</span>);<br>
-                    }<br><br>
-                    
-                    <span class="comment">// main.js</span><br>
-                    <span class="keyword">import</span> songs <span class="keyword">from</span> <span class="string">'./songs.js'</span>;<br>
-                    <span class="keyword">import</span> { play } <span class="keyword">from</span> <span class="string">'./player.js'</span>;<br>
-                    play();<br>
-                    console.log(songs);
+                    <span class="comment">// file.js</span><br>
+                    <span class="keyword">export</span> <span class="keyword">function</span> <span class="function">play</span>() { }<br>
+                    <span class="keyword">export</span> <span class="keyword">const</span> volume = <span class="string">80</span>;<br>
+                    <span class="keyword">export</span> <span class="keyword">class</span> <span class="function">Player</span> { }
+                </div>
+                
+                <div class="arrow">⬇️</div>
+                
+                <div class="match">
+                    <strong>Подходящий import:</strong>
+                    <div class="code-block">
+                        <span class="comment">// main.js</span><br>
+                        <span class="keyword">import</span> { play, volume, Player } <span class="keyword">from</span> <span class="string">'./file.js'</span>;
+                    </div>
+                </div>
+                
+                <div class="note">
+                    💡 <strong>Особенности:</strong> Можно экспортировать несколько функций/переменных. Имена должны совпадать при импорте.
                 </div>
             </div>
 
-            <div id="calc-example" class="tab-content">
+            <!-- 2. Экспорт по умолчанию -->
+            <div class="card export">
+                <div class="card-title">🎯 2. Экспорт по умолчанию</div>
+                <div class="code-block">
+                    <span class="comment">// player.js</span><br>
+                    <span class="keyword">const</span> player = {<br>
+                    &nbsp;&nbsp;play: () => console.log(<span class="string">"▶️"</span>),<br>
+                    &nbsp;&nbsp;pause: () => console.log(<span class="string">"⏸️"</span>)<br>
+                    };<br>
+                    <span class="keyword">export default</span> player;
+                </div>
+                
+                <div class="arrow">⬇️</div>
+                
+                <div class="match">
+                    <strong>Подходящий import:</strong>
+                    <div class="code-block">
+                        <span class="comment">// main.js</span><br>
+                        <span class="keyword">import</span> player <span class="keyword">from</span> <span class="string">'./player.js'</span>;<br>
+                        <span class="comment">// или любое другое имя:</span><br>
+                        <span class="keyword">import</span> myPlayer <span class="keyword">from</span> <span class="string">'./player.js'</span>;
+                    </div>
+                </div>
+                
+                <div class="note">
+                    💡 <strong>Особенности:</strong> Только один export default на файл. При импорте можно использовать любое имя.
+                </div>
+            </div>
+
+            <!-- 3. Импорт всего модуля -->
+            <div class="card import">
+                <div class="card-title">📦 3. Импорт всего модуля</div>
                 <div class="code-block">
                     <span class="comment">// math.js</span><br>
-                    <span class="keyword">export function</span> <span class="function">add</span>(x, y) { <span class="keyword">return</span> x + y; }<br>
-                    <span class="keyword">export function</span> <span class="function">subtract</span>(x, y) { <span class="keyword">return</span> x - y; }<br><br>
-                    
-                    <span class="comment">// main.js</span><br>
-                    <span class="keyword">import</span> * <span class="keyword">as</span> math <span class="keyword">from</span> <span class="string">'./math.js'</span>;<br>
-                    console.log(math.add(<span class="string">5</span>, <span class="string">3</span>)); <span class="comment">// 8</span><br>
-                    console.log(math.subtract(<span class="string">5</span>, <span class="string">3</span>)); <span class="comment">// 2</span>
+                    <span class="keyword">export</span> <span class="keyword">function</span> <span class="function">add</span>(a, b) { }<br>
+                    <span class="keyword">export</span> <span class="keyword">function</span> <span class="function">multiply</span>(a, b) { }<br>
+                    <span class="keyword">export default</span> <span class="string">"Math Utilities"</span>;
+                </div>
+                
+                <div class="arrow">⬇️</div>
+                
+                <div class="match">
+                    <strong>Подходящий import:</strong>
+                    <div class="code-block">
+                        <span class="comment">// main.js</span><br>
+                        <span class="keyword">import</span> * <span class="keyword">as</span> math <span class="keyword">from</span> <span class="string">'./math.js'</span>;<br><br>
+                        <span class="comment">// Использование:</span><br>
+                        math.add(<span class="string">2</span>, <span class="string">3</span>);<br>
+                        math.default; <span class="comment">// "Math Utilities"</span>
+                    </div>
+                </div>
+                
+                <div class="note">
+                    💡 <strong>Особенности:</strong> Все экспорты становятся свойствами объекта. Default экспорт доступен через <code>.default</code>.
                 </div>
             </div>
 
-            <div id="theme-example" class="tab-content">
+            <!-- 4. Side-effect импорт -->
+            <div class="card import">
+                <div class="card-title">🎨 4. Side-effect импорт</div>
                 <div class="code-block">
-                    <span class="comment">// theme.js (side-effect модуль)</span><br>
-                    console.log(<span class="string">"🎨 Applying theme..."</span>);<br>
-                    document.body.style.backgroundColor = <span class="string">"#1a1a2e"</span>;<br>
-                    document.body.style.color = <span class="string">"white"</span>;<br><br>
-                    
-                    <span class="comment">// main.js</span><br>
-                    <span class="keyword">import</span> <span class="string">'./theme.js'</span>; <span class="comment">// Стили применятся автоматически!</span>
+                    <span class="comment">// theme.js</span><br>
+                    console.log(<span class="string">"🎨 Тема загружается..."</span>);<br>
+                    document.body.style.background = <span class="string">"#1a1a2e"</span>;<br>
+                    <span class="comment">// Ничего не экспортируем!</span>
+                </div>
+                
+                <div class="arrow">⬇️</div>
+                
+                <div class="match">
+                    <strong>Подходящий import:</strong>
+                    <div class="code-block">
+                        <span class="comment">// main.js</span><br>
+                        <span class="keyword">import</span> <span class="string">'./theme.js'</span>;<br>
+                        <span class="comment">// Код выполнится автоматически!</span>
+                    </div>
+                </div>
+                
+                <div class="note">
+                    💡 <strong>Особенности:</strong> Файл выполняется при импорте. Не нужно присваивать переменной.
                 </div>
             </div>
+
+            <!-- 5. Комбинированный импорт -->
+            <div class="card import">
+                <div class="card-title">🔗 5. Комбинированный импорт</div>
+                <div class="code-block">
+                    <span class="comment">// player.js</span><br>
+                    <span class="keyword">export default</span> <span class="keyword">function</span> <span class="function">play</span>() { }<br>
+                    <span class="keyword">export</span> <span class="keyword">const</span> volume = <span class="string">80</span>;<br>
+                    <span class="keyword">export</span> <span class="keyword">function</span> <span class="function">pause</span>() { }
+                </div>
+                
+                <div class="arrow">⬇️</div>
+                
+                <div class="match">
+                    <strong>Подходящий import:</strong>
+                    <div class="code-block">
+                        <span class="comment">// main.js</span><br>
+                        <span class="keyword">import</span> play, { volume, pause } <span class="keyword">from</span> <span class="string">'./player.js'</span>;<br><br>
+                        <span class="comment">// Использование:</span><br>
+                        play();     <span class="comment">// default</span><br>
+                        pause();    <span class="comment">// именованный</span><br>
+                        console.log(volume); <span class="comment">// именованный</span>
+                    </div>
+                </div>
+                
+                <div class="note">
+                    💡 <strong>Особенности:</strong> Можно комбинировать default и именованные импорты в одной строке.
+                </div>
+            </div>
+
         </div>
+
+        <!-- Быстрая шпаргалка -->
+        <div class="card" style="margin-top: 30px; border-left-color: #FF9800;">
+            <div class="card-title">⚡ Быстрая шпаргалка</div>
+            <div class="example">
+                <p><strong>Когда что использовать:</strong></p>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li><strong>Именованный экспорт</strong> - для нескольких утилит</li>
+                    <li><strong>Export default</strong> - для главного компонента/класса</li>
+                    <li><strong>Импорт всего модуля</strong> - когда нужны все функции</li>
+                    <li><strong>Side-effect</strong> - для автоматического выполнения кода</li>
+                </ul>
+            </div>
+        </div>
+
     </div>
 
     <script>
-        // Функции для табов
-        function showTab(tabId) {
-            // Скрыть все табы
-            document.querySelectorAll('.tab-content').forEach(tab => {
-                tab.classList.remove('active');
-            });
-            
-            // Убрать активный класс у всех кнопок
-            document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            
-            // Показать выбранный таб
-            document.getElementById(tabId).classList.add('active');
-            
-            // Сделать кнопку активной
-            event.target.classList.add('active');
-        }
-
-        function showExample(exampleId) {
-            // Скрыть все примеры
-            document.querySelectorAll('#music-example, #calc-example, #theme-example').forEach(example => {
-                example.classList.remove('active');
-            });
-            
-            // Убрать активный класс у всех кнопок
-            document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            
-            // Показать выбранный пример
-            document.getElementById(exampleId).classList.add('active');
-            
-            // Сделать кнопку активной
-            event.target.classList.add('active');
-        }
-
-        // Проверка ответов в викторине
-        function checkAnswer(element, result) {
-            // Сбросить все варианты
-            element.parentElement.querySelectorAll('.option').forEach(opt => {
-                opt.classList.remove('correct', 'incorrect');
-            });
-            
-            // Показать результат
-            if (result === 'correct') {
-                element.classList.add('correct');
-                element.innerHTML += ' ✅';
-            } else {
-                element.classList.add('incorrect');
-                element.innerHTML += ' ❌';
-            }
-        }
-
-        // Показать решение
-        function showSolution() {
-            const solution = document.getElementById('solution');
-            solution.style.display = solution.style.display === 'none' ? 'block' : 'none';
-        }
-
-        // Автоматическое выполнение примеров кода
-        console.log("Добро пожаловать в обучалку по модулям!");
+        // Простой пример для демонстрации
+        console.log("🎓 Шпаргалка загружена!");
     </script>
 </body>
 </html>
